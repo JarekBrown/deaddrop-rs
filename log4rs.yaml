@@ -1,0 +1,11 @@
+#`` configuration file for log4rs -- deaddrop-rs
+appenders:
+  events:
+    kind: file
+    path: logs.txt
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} | {({l}):5.5} | {m}{n}"
+
+root:
+  appenders:
+    - events
