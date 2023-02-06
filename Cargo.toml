@@ -10,3 +10,5 @@ clap = { version = "3.1.6", features = ["cargo"] }
 bcrypt = "0.13.0"
 rpassword = "7.2"
 rusqlite = { version = "0.28.0", features = ["bundled"] }
+log = "0.4.17"
+log4rs = "1.2.0"

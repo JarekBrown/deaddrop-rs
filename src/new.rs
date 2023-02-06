@@ -1,4 +1,4 @@
-use crate::{session, db::users};
+use crate::{session, db::users, logging::log_event};
 use std::io::{self, BufRead};
 
 pub fn new_user(user: String) {
@@ -8,11 +8,13 @@ pub fn new_user(user: String) {
     };
 
     if !users::no_users() && !user_exists {
+        log_event("error", format!("(new) user not found: {}", {user})).unwrap();
         panic!("User not recognized");
     }
 
-    if !session::authenticate(user).expect("Unable to authenticate user") {
-        panic!("Unablee to authenticate user");
+    if !session::authenticate(user.clone()).expect("Unable to authenticate user") {
+        log_event("warn", format!("(new) unable to authenticate: {}", user)).unwrap();
+        panic!("Unable to authenticate user");
     }
 
     println!("Username: ");
@@ -20,6 +22,8 @@ pub fn new_user(user: String) {
     let new_pass_hash = session::get_password();
 
     users::set_user_pass_hash(new_user, new_pass_hash);
+
+    log_event("info", format!("user created: {}", user)).unwrap();
 }
 
 fn get_new_username() -> String {

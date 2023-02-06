@@ -8,6 +8,7 @@ pub mod db;
 pub mod new;
 pub mod read;
 pub mod send;
+pub mod logging;
 
 fn main() {
     let args = command!()

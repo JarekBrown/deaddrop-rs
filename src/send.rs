@@ -1,6 +1,6 @@
 use std::io::{self, BufRead};
 
-use crate::db::{users, messages};
+use crate::{db::{users, messages}, logging::log_event};
 
 pub fn send_message(user: String) {
     let user_exists = match users::get_user(user.clone()) {
@@ -9,12 +9,15 @@ pub fn send_message(user: String) {
     };
 
     if !user_exists {
+        log_event("error", format!("(send) user not found: {}", {user})).unwrap();
         panic!("User not recognized");
     }
 
     let message = get_user_message();
 
-    messages::save_message(message, user);
+    messages::save_message(message, user.clone());
+
+    log_event("info", format!("message sent: {}", user)).unwrap();
 }
 
 fn get_user_message() -> String {
