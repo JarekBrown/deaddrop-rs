@@ -1,5 +1,6 @@
 use rusqlite::{Connection};
 use std::{fs, path::Path};
+use crate::logging::log_event;
 
 pub fn connect() -> Connection {
     let mut must_initialize_db = false;
@@ -16,6 +17,7 @@ pub fn connect() -> Connection {
         for command in commands {
             connection.execute(command, ()).unwrap();
         }
+        log_event("info", format!("database created"));
     }
     
     return connection;
