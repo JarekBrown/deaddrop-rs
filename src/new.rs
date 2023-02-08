@@ -8,12 +8,12 @@ pub fn new_user(user: String) {
     };
 
     if !users::no_users() && !user_exists {
-        log_event("error", format!("(new) user not found: {}", {user})).unwrap();
+        log_event("error", format!("(new) user not found: {}", {user}));
         panic!("User not recognized");
     }
 
     if !session::authenticate(user.clone()).expect("Unable to authenticate user") {
-        log_event("warn", format!("(new) unable to authenticate: {}", user)).unwrap();
+        log_event("warn", format!("(new) unable to authenticate: {}", user));
         panic!("Unable to authenticate user");
     }
 
@@ -23,7 +23,7 @@ pub fn new_user(user: String) {
 
     users::set_user_pass_hash(new_user, new_pass_hash);
 
-    log_event("info", format!("user created: {}", user)).unwrap();
+    log_event("info", format!("user created: {}", user));
 }
 
 fn get_new_username() -> String {

@@ -7,12 +7,12 @@ pub fn read_messages(user: String) {
     };
 
     if !user_exists {
-        log_event("error", format!("(read) user not found: {}", {user})).unwrap();
+        log_event("error", format!("(read) user not found: {}", {user}));
         panic!("User not recognized");
     }
 
     if !session::authenticate(user.clone()).expect("Unable to authenticate user") {
-        log_event("warn", format!("(read) unable to authenticate: {}", user)).unwrap();
+        log_event("warn", format!("(read) unable to authenticate: {}", user));
         panic!("Unable to authenticate user");
     }
 
@@ -20,5 +20,5 @@ pub fn read_messages(user: String) {
     for message in messages {
         println!("{:?}", message);
     }
-    log_event("info", format!("messages read: {}", user)).unwrap();
+    log_event("info", format!("messages read: {}", user));
 }

@@ -1,8 +1,7 @@
-use log::{error, info, warn};
+use log::{error, info, warn, debug};
 use log4rs;
 
 /// ## Event logger
-///
 ///
 /// Used to log the following events:
 /// - sending/reading a message to user that exists
@@ -30,13 +29,14 @@ use log4rs;
 /// 
 /// log_event("warn", "this could be an issue");
 /// ```
-pub fn log_event(category: &str, event: String) -> Result<(), &str> {   
-    log4rs::init_file("log4rs.yaml", Default::default()).unwrap();
+pub fn log_event(category: &str, event: String) {   
+    log4rs::init_file("log4rs.yaml", Default::default()).unwrap_or_else(|error| 
+        println!("Error encountered when initializing logger: {}", error) );
 
     match category {
-        "info" => Ok(info!("{event}")),
-        "warn" => Ok(warn!("{event}")),
-        "error" => Ok(error!("{event}")),
-        _ => Err("problem logging event!")
+        "info" => info!("{event}"),
+        "warn" => warn!("{event}"),
+        "error" => error!("{event}"),
+        _ => debug!("invalid category entered when trying to log: {category}, {event}")
     }
 }

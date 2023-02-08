@@ -9,7 +9,7 @@ pub fn send_message(user: String) {
     };
 
     if !user_exists {
-        log_event("error", format!("(send) user not found: {}", {user})).unwrap();
+        log_event("error", format!("(send) user not found: {}", {user}));
         panic!("User not recognized");
     }
 
@@ -17,7 +17,7 @@ pub fn send_message(user: String) {
 
     messages::save_message(message, user.clone());
 
-    log_event("info", format!("message sent: {}", user)).unwrap();
+    log_event("info", format!("message sent to: {}", user));
 }
 
 fn get_user_message() -> String {
