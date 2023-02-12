@@ -11,4 +11,5 @@ Cargo.lock
 
 dd.db
 
-logs.txt
+# Don't want that secret pem file to be shared
+*.pem
