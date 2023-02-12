@@ -24,7 +24,7 @@ Data gets stored into the local database file dd.db. This file will not be synch
 
 ## Logging
 
-Logging is done using [log4rs](https://crates.io/crates/log4rs). It is initialized using [this file](log4rs.yaml), and writes to a `logs.txt` file. The code that runs the logger can be found in [logging.rs](src/logging.rs).
+Logging is done using [log4rs](https://crates.io/crates/log4rs). It is initialized using [this file](log4rs.yaml), and writes to a `logs.txt` file. The code that initializes the logger can be found in [logging.rs](src/logging.rs).
 
 ### Categories
 
@@ -39,7 +39,22 @@ The following are possible categories you may see in your log file:
 - ERROR
   - used when there was a problem encountered
     - Example: the specified user does not exist
-- DEBUG
-  - used when the `log_event` function is called incorrectly
 
-**Note:** the log file is not synched to git repos.
+## Mitigations
+
+There were three issues that I addressed, not including the added logging functionality. They are as follows:
+
+- Duplicate usernames
+  - original behavior: there was nothing preventing 2+ users from having the same name
+  - current behavior: user creation will not succeed until an *unused* username is provided
+    - details: a loop was added that will not break until a valid username is entered
+  - location of changes: see lines 30-50 in [new.rs](src/new.rs)
+- Table creation failure
+  - original behavior: when an OS did not use the `\n` line ending (e.g. Windows), the second table would not be created
+  - current behavior: the OS is detected, and the appropriate line ending is chosen
+  - location of changes: see lines 14-18 in [db.rs](src/db/db.rs)
+- Message encryption
+  - original behavior: n/a
+  - current behavior: messages are now encrypted when saved to the database
+    - details: uses 4096-bit RSA encryption, using a PEM file (one is created if an existing file is not found)
+  - location of changes: see [encryption.rs](src/encryption.rs)
