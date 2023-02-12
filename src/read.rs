@@ -1,4 +1,5 @@
-use crate::{session, db::{messages, users}, logging::log_event};
+use crate::{session, db::{messages, users}, encryption};
+use log::{info, warn, error};
 
 pub fn read_messages(user: String) {
     let user_exists = match users::get_user(user.clone()) {
@@ -7,18 +8,19 @@ pub fn read_messages(user: String) {
     };
 
     if !user_exists {
-        log_event("error", format!("(read) user not found: {}", {user}));
+        error!("user not found: {}", user);
         panic!("User not recognized");
     }
 
     if !session::authenticate(user.clone()).expect("Unable to authenticate user") {
-        log_event("warn", format!("(read) unable to authenticate: {}", user));
+        warn!("unable to authenticate: {}", user);
         panic!("Unable to authenticate user");
     }
 
     let messages = messages::get_messages_for_user(user.clone());
     for message in messages {
-        println!("{:?}", message);
+        let dec_message = encryption::decrypt(message.clone());
+        println!("{:?}", dec_message);
     }
-    log_event("info", format!("messages read: {}", user));
+    info!("messages read: {}", user);
 }

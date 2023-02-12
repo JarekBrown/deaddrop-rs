@@ -1,4 +1,5 @@
 use clap::{arg, command, value_parser};
+use logging::log_init;
 use new::new_user;
 use read::read_messages;
 use send::send_message;
@@ -9,6 +10,7 @@ pub mod new;
 pub mod read;
 pub mod send;
 pub mod logging;
+pub mod encryption;
 
 fn main() {
     let args = command!()
@@ -57,6 +59,8 @@ fn main() {
         println!("Deaddrop must only use a single verb");
         return;
     }
+
+    log_init();
 
     if read {
         read_messages(user);
