@@ -25,5 +25,5 @@ pub fn connect() -> Connection {
         info!("database created");
     }
 
-    return connection;
+    connection
 }
