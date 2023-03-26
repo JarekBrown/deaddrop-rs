@@ -9,7 +9,9 @@ pub fn get_user(user: String) -> Option<i64> {
         .query(&[(":user", &user)])
         .expect("expected query to execute");
 
-    rows.next().expect("expected to find something in results").map(|row| row.get(0).expect("expected there to be a value in the row"))
+    rows.next()
+        .expect("expected to find something in results")
+        .map(|row| row.get(0).expect("expected there to be a value in the row"))
 }
 
 pub fn get_user_pass_hash(user: String) -> String {
