@@ -5,3 +5,20 @@
 2023-02-12 10:21:03 | INFO  | src\read.rs:25 — messages read: frodo
 2023-02-12 10:21:34 | INFO  | src\send.rs:24 — message sent to: gandalf
 2023-02-12 10:21:49 | WARN  | src\read.rs:16 — unable to authenticate: gandalf
+2023-03-21 20:04:53 | INFO  | src\db\db.rs:25 — database created
+2023-03-21 20:05:00 | INFO  | src\new.rs:27 — user created by aragorn: aragorn
+2023-03-21 20:05:24 | INFO  | src\send.rs:24 — message sent to: aragorn
+2023-03-21 20:05:46 | INFO  | src\read.rs:25 — messages read: aragorn
+2023-03-21 20:10:06 | ERROR | src\encryption.rs:160 — Message integrity check failure
+2023-03-21 20:10:06 | INFO  | src\read.rs:25 — messages read: aragorn
+2023-03-21 20:10:26 | INFO  | src\send.rs:24 — message sent to: aragorn
+2023-03-24 12:47:07 | INFO  | src\new.rs:27 — user created by aragorn: aragorn
+2023-03-24 12:47:13 | INFO  | src\new.rs:27 — user created by aragorn: legolas
+2023-03-24 12:47:26 | INFO  | src\send.rs:29 — message sent to: aragorn
+2023-03-24 12:47:33 | INFO  | src\read.rs:25 — messages read: aragorn
+2023-03-24 12:48:25 | INFO  | src\read.rs:25 — messages read: aragorn
+2023-03-24 12:48:53 | INFO  | src\read.rs:25 — messages read: aragorn
+2023-03-24 12:49:03 | INFO  | src\send.rs:29 — message sent to: aragorn
+2023-03-26 14:02:21 | ERROR | src\read.rs:24 — message integrity check failure for aragorn
+2023-03-26 14:02:21 | ERROR | src\read.rs:24 — message integrity check failure for aragorn
+2023-03-26 14:02:21 | INFO  | src\read.rs:29 — messages read: aragorn
