@@ -4,38 +4,29 @@ use new::new_user;
 use read::read_messages;
 use send::send_message;
 
-pub mod session;
 pub mod db;
+pub mod encryption;
+pub mod logging;
 pub mod new;
 pub mod read;
 pub mod send;
-pub mod logging;
-pub mod encryption;
+pub mod session;
 
 fn main() {
     let args = command!()
         .arg(
             arg!(--to <USER> "the username to send data to")
                 .required(false)
-                .value_parser(value_parser!(String))
+                .value_parser(value_parser!(String)),
         )
         .arg(
             arg!(--user <USER> "the username to retrieve data for")
                 .required(false)
-                .value_parser(value_parser!(String))
+                .value_parser(value_parser!(String)),
         )
-        .arg(
-            arg!(--new "run the utility in add user mode")
-                .takes_value(false)
-        )
-        .arg(
-            arg!(--read "run the utility in read mode")
-                .takes_value(false)
-        )
-        .arg(
-            arg!(--send "run the utility in send mode")
-                .takes_value(false)
-        )
+        .arg(arg!(--new "run the utility in add user mode").takes_value(false))
+        .arg(arg!(--read "run the utility in read mode").takes_value(false))
+        .arg(arg!(--send "run the utility in send mode").takes_value(false))
         .get_matches();
 
     let new = args.is_present("new");
@@ -69,5 +60,4 @@ fn main() {
     } else if new {
         new_user(user);
     }
-
 }

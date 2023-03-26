@@ -1,3 +1,3 @@
 mod db;
-pub mod users;
 pub mod messages;
+pub mod users;

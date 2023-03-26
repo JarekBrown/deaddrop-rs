@@ -44,7 +44,7 @@ fn get_new_username() -> String {
         if user_exists {
             println!("Already taken, please try again:");
         } else {
-            break input
+            break input;
         }
     }
 }

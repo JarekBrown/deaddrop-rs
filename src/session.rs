@@ -5,7 +5,6 @@ pub fn get_password() -> String {
 }
 
 pub fn authenticate(user: String) -> Result<bool, bcrypt::BcryptError> {
-     
     // bypass auth if no users currently exist
     if db::users::no_users() {
         return Ok(true);
@@ -25,7 +24,7 @@ fn hash(pass: String) -> String {
         Ok(s) => s,
         Err(e) => panic!("{:?}", e),
     }
-} 
+}
 
 fn read_pass() -> String {
     rpassword::prompt_password("Password: ").unwrap()
