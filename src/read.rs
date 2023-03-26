@@ -1,11 +1,11 @@
-use crate::{session, db::{messages, users}, encryption};
-use log::{info, warn, error};
+use crate::{
+    db::{messages, users},
+    encryption, session,
+};
+use log::{error, info, warn};
 
 pub fn read_messages(user: String) {
-    let user_exists = match users::get_user(user.clone()) {
-        Some(_) => true,
-        None => false,
-    };
+    let user_exists = users::get_user(user.clone()).is_some();
 
     if !user_exists {
         error!("user not found: {}", user);
@@ -19,7 +19,10 @@ pub fn read_messages(user: String) {
 
     let messages = messages::get_messages_for_user(user.clone());
     for message in messages {
-        let dec_message = encryption::decrypt(message.clone());
+        let dec_message = encryption::decrypt(message.clone()).unwrap_or_else(|e| {
+            error!("{} for {}", &e, &user);
+            format!("ERROR: {}", e)
+        });
         println!("{:?}", dec_message);
     }
     info!("messages read: {}", user);
